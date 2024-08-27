@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "dev": "tsx --env-file .env src/index.ts",
+    "dev:watch": "tsx watch --env-file .env src/index.ts"
   },
   "keywords": [],
   "author": "",
