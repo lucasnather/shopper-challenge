@@ -1,0 +1,22 @@
+
+services:
+  postgresql: 
+    image: 'bitnami/postgresql:latest'
+    container_name: shopper
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db:/var/lib/postgresql
+    environment:
+      - POSTGRESQL_USERNAME=lucasbrandao
+      - POSTGRESQL_PASSWORD=senhaprageralvermesmo
+      - POSTGRESQL_DATABASE=readings
+    networks:
+      - shopper
+
+volumes:
+  db:
+
+networks:
+  shopper:
+    driver: bridge
