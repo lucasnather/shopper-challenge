@@ -8,9 +8,9 @@ services:
     volumes:
       - ./db:/var/lib/postgresql
     environment:
-      - POSTGRESQL_USERNAME=lucasbrandao
-      - POSTGRESQL_PASSWORD=senhaprageralvermesmo
-      - POSTGRESQL_DATABASE=readings
+      - POSTGRESQL_USERNAME=${POSTGRES_USERNAME}
+      - POSTGRESQL_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRESQL_DATABASE=${POSTGRES_DATABASE}
     networks:
       - shopper
 
