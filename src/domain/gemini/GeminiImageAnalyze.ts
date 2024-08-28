@@ -26,11 +26,12 @@ export class GeminiImageAnalyze {
             },
           ]);
 
-          console.log(result.response.text());
+          const resultText = result.response.text()
 
           return {
             imageName: uploadResult.file.displayName,
-            url: uploadResult.file.uri
+            url: uploadResult.file.uri,
+            measureValue: resultText
         }
     }
 

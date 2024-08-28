@@ -12,6 +12,7 @@ app.get('/', async (req, res) => {
     })
 })
 
+
 app.listen(port, () => {
     console.log(`Application running at port http://localhost:${port}/`)
 })
