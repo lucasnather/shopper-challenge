@@ -8,16 +8,16 @@ import { CreateConsumptionService } from "../../application/services/CreateConsu
 import { MeasureType } from "../../domain/enum/MeasureType.js";
 
 const createConsumptionBodySchema = z.object({
-    measureDatetime: z.date(),
-    measureType: z.nativeEnum(MeasureType),
-    customerCode: z.string(),
+    measure_datetime: z.coerce.date(),
+    measure_type: z.nativeEnum(MeasureType),
+    customer_code: z.string(),
     image: z.string(),
 })
 
 export class CreateConsumptionController {
 
    async post(req: Request, res: Response) {
-    const { customerCode, image, measureDatetime, measureType } = createConsumptionBodySchema.parse(req.body)
+    const { customer_code: customerCode, image, measure_datetime: measureDatetime, measure_type: measureType } = createConsumptionBodySchema.parse(req.body)
 
     const converter = new Converter()
     const geminiImageAnalyse = new GeminiImageAnalyze()
@@ -33,13 +33,13 @@ export class CreateConsumptionController {
             measureType
         })
 
-        res.status(201).json({
+        return res.status(201).json({
             "image_url": imageUrl,
             "measure_value": measureValue,
             "measure_uuid": measureUUID
         })
     } catch(e) {
-        res.status(404).send({
+        return res.status(404).send({
             message: "Erro por enquanto"
         })
     }

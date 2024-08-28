@@ -31,13 +31,13 @@ export class CreateConsumptionService {
         const geminiResponse = await this.geminiImageAnalyse.response('./image.png')
         const geminiImageUrl = geminiResponse.url
         const geminiMeasureValue = geminiResponse.measureValue
+        console.log(geminiMeasureValue);
         
-        console.log(geminiResponse)
 
         const findConsumptionByMonth = await this.geminiFactory.findByMonth(data.measureType, data.measureDatetime)
-        console.log(findConsumptionByMonth)
 
-        if(!findConsumptionByMonth) throw new Error('Erro para ser tratado: Existe leitura com este mes, Invalid data')
+        if(findConsumptionByMonth) throw new Error('Erro para ser tratado: Existe leitura com este mes, Invalid data')
+            
 
         const consumption = await this.geminiFactory.create({
             customerCode: data.customerCode,
@@ -46,6 +46,7 @@ export class CreateConsumptionService {
             measureDatetime: data.measureDatetime,
             measureValue: Number(geminiMeasureValue)
         })
+        console.log(consumption)
 
         return {
             imageUrl: consumption.getImageUrl,
