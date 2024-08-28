@@ -30,6 +30,7 @@ export class CreateConsumptionService {
 
         const geminiResponse = await this.geminiImageAnalyse.response('./image.png')
         const geminiImageUrl = geminiResponse.url
+        const geminiMeasureValue = geminiResponse.measureValue
         
         console.log(geminiResponse)
 
@@ -43,7 +44,13 @@ export class CreateConsumptionService {
             imageUrl: geminiImageUrl,
             measureType: data.measureType,
             measureDatetime: data.measureDatetime,
-            measureValue:
+            measureValue: Number(geminiMeasureValue)
         })
+
+        return {
+            imageUrl: consumption.getImageUrl,
+            measureUUID: consumption.getMeasureId,
+            measureValue: consumption.getMeasureValue
+        }
     }
 }
