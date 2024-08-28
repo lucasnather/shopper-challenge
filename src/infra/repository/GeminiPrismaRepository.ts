@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { GeminiFactory } from "../../application/gateway/GeminiFactory.js";
+import { ConsumptionsResponse, GeminiFactory } from "../../application/gateway/GeminiFactory.js";
 import { Consumption } from "../../domain/Consumption.js";
 import { prisma } from "../../config/prisma.js";
 import { GeminiMapper } from "../gateway/GeminiMapper.js";
@@ -8,6 +8,7 @@ import { MeasureType } from "../../domain/enum/MeasureType.js";
 export class GeminiPrismaRepository implements GeminiFactory {
 
     constructor(private geminiMapper: GeminiMapper) {}
+   
    
 
     async create(data: Prisma.ComsumptionsCreateInput): Promise<Consumption> {
@@ -77,6 +78,39 @@ export class GeminiPrismaRepository implements GeminiFactory {
         const consumptionToDomain = this.geminiMapper.toDomain(consumption)
 
         return consumptionToDomain
+    }
+
+    async findMany(customerCode: string, measureType?: MeasureType): Promise<ConsumptionsResponse> {
+        const consumptions = await prisma.comsumptions.findMany({
+            where: {
+                customerCode,
+                measureType
+            },
+            select: {
+                hasConfirmed: true,
+                imageUrl: true,
+                measureDatetime: true,
+                measureId: true,
+                measureType: true,
+                measureValue: true
+            }
+        })
+
+        const measures = consumptions.map(consumption => {
+            return {
+                hasConfirmed: consumption.hasConfirmed,
+                imageUrl: consumption.imageUrl,
+                measureDatetime: consumption.measureDatetime,
+                measureId: consumption.measureId,
+                measureType: consumption.measureType,
+                measureValue: consumption.measureValue
+            }
+        })
+
+        return {
+            customerCode,
+            measures
+        }
     }
 
 }

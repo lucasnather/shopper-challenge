@@ -15,7 +15,7 @@ export class GeminiMapper {
             data.measureType, 
             data.customerCode, 
             data.imageUrl, 
-            data.hasConfirmed)
+            data.hasConfirmed || false)
     }
 
     public toEntity(data: Consumption) {
