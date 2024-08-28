@@ -8,6 +8,7 @@ import { MeasureType } from "../../domain/enum/MeasureType.js";
 export class GeminiPrismaRepository implements GeminiFactory {
 
     constructor(private geminiMapper: GeminiMapper) {}
+   
 
     async create(data: Prisma.ComsumptionsCreateInput): Promise<Consumption> {
         const consumption = await prisma.comsumptions.create({
@@ -24,6 +25,22 @@ export class GeminiPrismaRepository implements GeminiFactory {
 
         return consumptionToDomain
         
+    }
+
+    async  confirmValue(measureValue: number, measureId: string): Promise<Consumption> {
+        const consumption = await prisma.comsumptions.update({
+            where: {
+                measureId,
+                measureValue
+            },
+            data: {
+                hasConfirmed: true
+            }
+        })
+
+        const consumptionToDomain = this.geminiMapper.toDomain(consumption)
+
+        return consumptionToDomain
     }
 
     async findByMonth(measureType: MeasureType, measureDatetime: Date): Promise<Consumption | null> {
@@ -46,6 +63,20 @@ export class GeminiPrismaRepository implements GeminiFactory {
 
         return consumptionToDomain
 
+    }
+
+    async findById(measureId: string): Promise<Consumption | null> {
+        const consumption = await prisma.comsumptions.findUnique({
+            where: {
+                measureId
+            }
+        })
+
+        if(!consumption) return null
+
+        const consumptionToDomain = this.geminiMapper.toDomain(consumption)
+
+        return consumptionToDomain
     }
 
 }
