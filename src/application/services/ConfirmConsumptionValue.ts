@@ -1,6 +1,3 @@
-import { MeasureType } from "../../domain/enum/MeasureType.js";
-import { GeminiImageAnalyze } from "../../domain/gemini/GeminiImageAnalyze.js";
-import { Converter } from "../../domain/utils/Converter.js";
 import { GeminiFactory } from "../gateway/GeminiFactory.js";
 
 type ConfirmConsumptionValueRequest = {
