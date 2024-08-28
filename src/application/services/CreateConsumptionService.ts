@@ -1,4 +1,5 @@
 import { MeasureType } from "../../domain/enum/MeasureType.js";
+import { InvalidReadbleMonthError } from "../../domain/erros/InvalidReadbleMonthError.js";
 import { GeminiImageAnalyze } from "../../domain/gemini/GeminiImageAnalyze.js";
 import { Converter } from "../../domain/utils/Converter.js";
 import { GeminiFactory } from "../gateway/GeminiFactory.js";
@@ -31,13 +32,11 @@ export class CreateConsumptionService {
         const geminiResponse = await this.geminiImageAnalyse.response('./image.png')
         const geminiImageUrl = geminiResponse.url
         const geminiMeasureValue = geminiResponse.measureValue
-        console.log(geminiMeasureValue);
         
-
         const findConsumptionByMonth = await this.geminiFactory.findByMonth(data.measureType, data.measureDatetime)
-
-        if(findConsumptionByMonth) throw new Error('Erro para ser tratado: Existe leitura com este mes, Invalid data')
-            
+        
+        if(findConsumptionByMonth == null) throw new InvalidReadbleMonthError()
+        if(findConsumptionByMonth == 'Consumption Found') throw new Error('Consumption Already Exist')
 
         const consumption = await this.geminiFactory.create({
             customerCode: data.customerCode,

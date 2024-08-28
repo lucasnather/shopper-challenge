@@ -23,7 +23,6 @@ export class FindManyConsumptionValueController {
    async getMany(req: Request, res: Response) {
     const { customer_code: code} = findManyConsumptionValueParamSchema.parse(req.params)
     const { measure_type: measureType} = findManyConsumptionValueQuerySchema.parse(req.query)
-    console.log(measureType)
 
     const geminiMapper = new GeminiMapper()
     const geminiPrismaRepository = new GeminiPrismaRepository(geminiMapper)

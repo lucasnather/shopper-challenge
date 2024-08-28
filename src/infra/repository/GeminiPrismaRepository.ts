@@ -42,26 +42,39 @@ export class GeminiPrismaRepository implements GeminiFactory {
         return consumptionToDomain
     }
 
-    async findByMonth(measureType: MeasureType, measureDatetime: Date): Promise<Consumption | null> {
+    async findByMonth(measureType: MeasureType, measureDatetime: Date): Promise<string | null> {
         const month = measureDatetime.getMonth() + 1
 
         const consumption = await prisma.comsumptions.findFirst({
             where: {
-                measureType,
-                measureDatetime
+                AND: [
+                    {
+                        measureType
+                    },
+                    {
+                        measureDatetime: {
+                            gte: new Date(2024, month - 1, 1)
+                        }
+                    },
+                    {
+                        measureDatetime: {
+                            lte: new Date(2024, month - 1, 30)
+                        }
+                    }
+                ]
             }
         })
 
-        if(!consumption) return null
+        if(!consumption) {
+            return 'Consumption Not Found'
+        } else {
+            
+            const consumptionMonth = consumption.measureDatetime.getMonth() + 1
 
-        const consumptionMonth = consumption.measureDatetime.getMonth() + 1
+            if(month === consumptionMonth) return null
 
-        if(month === consumptionMonth) return null
-
-        const consumptionToDomain = this.geminiMapper.toDomain(consumption)
-
-        return consumptionToDomain
-
+            return 'Consumption Found'
+        }
     }
 
     async findById(measureId: string): Promise<Consumption | null> {
