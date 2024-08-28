@@ -6,6 +6,6 @@ const router = Router()
 const createGeminiController = new CreateConsumptionController()
 
 router 
-    .post('/upload', (req, res) => createGeminiController.post(req, res))
+    .post('/upload', (req, res) => createGeminiController.upload(req, res))
     
 export const geminRouter = router

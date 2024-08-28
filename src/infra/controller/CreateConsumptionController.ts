@@ -16,7 +16,7 @@ const createConsumptionBodySchema = z.object({
 
 export class CreateConsumptionController {
 
-   async post(req: Request, res: Response) {
+   async upload(req: Request, res: Response) {
     const { customer_code: customerCode, image, measure_datetime: measureDatetime, measure_type: measureType } = createConsumptionBodySchema.parse(req.body)
 
     const converter = new Converter()

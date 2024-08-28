@@ -11,7 +11,7 @@ const confirmConsumptionValueBodySchema = z.object({
 
 export class ConfirmConsumptionValueController {
 
-   async post(req: Request, res: Response) {
+   async confirm(req: Request, res: Response) {
     const { measure_id: measureId, measure_value: measureValue  } = confirmConsumptionValueBodySchema.parse(req.body)
 
     const geminiMapper = new GeminiMapper()
