@@ -21,6 +21,8 @@ export class ConfirmConsumptionValueService {
 
         if(!findConsumptionById) throw new Error('Erro a ser tratado: Consumption Not FOund')
 
+        if(findConsumptionById.getHasConfirmed) throw new Error('Erro a ser tratado: Consumption jám foi confirmada')
+
         const isValueEqual = findConsumptionById.getMeasureValue === data.measureValue
 
         if(!isValueEqual) throw new Error('Erro a ser tratado: Value is not Equal')

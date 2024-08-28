@@ -26,7 +26,7 @@ export class Consumption {
         this.measureType = measureType
         this.customerCode = customerCode
         this.imageUrl = imageUrl
-        this.hasConfirmed = false
+        this.hasConfirmed = hasConfirmed || false
     }
 
     public get getMeasureId() {

@@ -38,6 +38,8 @@ export class GeminiPrismaRepository implements GeminiFactory {
             }
         })
 
+        console.log(consumption)
+
         const consumptionToDomain = this.geminiMapper.toDomain(consumption)
 
         return consumptionToDomain
