@@ -6,7 +6,7 @@ import { GeminiFactory } from "../gateway/GeminiFactory.js";
 
 type CreateConsumptionRequest = {
     measureDatetime: Date,
-    measureType: MeasureType
+    measureType: MeasureType,
     customerCode: string,
     image: string,
 }
