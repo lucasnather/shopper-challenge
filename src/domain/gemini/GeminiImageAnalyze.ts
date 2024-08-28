@@ -17,7 +17,7 @@ export class GeminiImageAnalyze {
         )
 
         const result = await model.generateContent([
-            "Tell me about this image.",
+            "Você é um chatbot que analisa medidores de água ou gás, você vai analisar uma\n imagem que será passada e retornar APENAS O VALOR INTEIRO do consumo, \nnão envie textos no formato string, me data, nem objeto, APENAS O VALOR INTEIRO DO CONSUMO DE ÀGUA OU GÀS. Caso alguém envie outro tipo de foto\n que não seja de sobre medidores de água  gás, responda que você é um \nchatbot apenas de medidores",
             {
               fileData: {
                 fileUri: uploadResult.file.uri,

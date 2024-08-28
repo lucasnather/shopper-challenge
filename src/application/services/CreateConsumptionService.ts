@@ -46,7 +46,6 @@ export class CreateConsumptionService {
             measureDatetime: data.measureDatetime,
             measureValue: Number(geminiMeasureValue)
         })
-        console.log(consumption)
 
         return {
             imageUrl: consumption.getImageUrl,
