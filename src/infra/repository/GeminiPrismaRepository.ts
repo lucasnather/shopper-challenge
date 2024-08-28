@@ -9,8 +9,6 @@ export class GeminiPrismaRepository implements GeminiFactory {
 
     constructor(private geminiMapper: GeminiMapper) {}
    
-   
-
     async create(data: Prisma.ComsumptionsCreateInput): Promise<Consumption> {
         const consumption = await prisma.comsumptions.create({
             data: {

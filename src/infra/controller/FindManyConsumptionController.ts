@@ -10,7 +10,12 @@ const findManyConsumptionValueParamSchema = z.object({
 })
 
 const findManyConsumptionValueQuerySchema = z.object({
-    measure_type: z.nativeEnum(MeasureType).optional()
+    measure_type: z
+    .string()
+    .transform((type) => type.toUpperCase())
+    .transform((type) => type as MeasureType)
+    .optional()
+    
 })
 
 export class FindManyConsumptionValueController {
@@ -18,6 +23,7 @@ export class FindManyConsumptionValueController {
    async getMany(req: Request, res: Response) {
     const { customer_code: code} = findManyConsumptionValueParamSchema.parse(req.params)
     const { measure_type: measureType} = findManyConsumptionValueQuerySchema.parse(req.query)
+    console.log(measureType)
 
     const geminiMapper = new GeminiMapper()
     const geminiPrismaRepository = new GeminiPrismaRepository(geminiMapper)
