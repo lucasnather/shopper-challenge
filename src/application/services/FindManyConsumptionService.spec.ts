@@ -1,19 +1,16 @@
 import { imageBase64 } from "../../../test/image-base64.js"
 import { MeasureType } from "../../domain/enum/MeasureType.js"
-import { GeminiMapper } from "../gateway/GeminiMapper.js"
-import { InMemoryPrismaRepository } from "../repository/InMemoryPrismaRepository.js"
-import { FindManyConsumptionsValueService } from "../../application/services/FindManyConsumptions.js"
+import { InMemoryPrismaRepository } from "../../infra/repository/InMemoryPrismaRepository.js"
+import { FindManyConsumptionsValueService } from "./FindManyConsumptionsService.js"
 import { CustomerMeasureNotFoundError } from "../../domain/erros/CustomerMeasureNotFound.js"
 
 let inMemoryPrismaRepository: InMemoryPrismaRepository
-let geminiMapper: GeminiMapper
 let sut: FindManyConsumptionsValueService
 
 describe('Find Manany Consumption Service', () => {
 
     beforeEach(() => {
-        geminiMapper = new GeminiMapper()
-        inMemoryPrismaRepository = new InMemoryPrismaRepository(geminiMapper)
+        inMemoryPrismaRepository = new InMemoryPrismaRepository()
         sut = new FindManyConsumptionsValueService(inMemoryPrismaRepository)
     })
 
@@ -66,9 +63,6 @@ describe('Find Manany Consumption Service', () => {
             customerCode: '123456',
             measureType: MeasureType.WATER
         })
-
-        console.log(customerCode)
-        console.log(measures)
 
         expect(customerCode).toEqual('123456')
         expect(measures).toHaveLength(1)

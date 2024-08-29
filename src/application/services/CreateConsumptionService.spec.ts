@@ -1,26 +1,22 @@
-import { any, number } from "zod"
 import { imageBase64 } from "../../../test/image-base64.js"
-import { CreateConsumptionService } from "../../application/services/CreateConsumptionService.js"
+import { CreateConsumptionService } from "./CreateConsumptionService.js"
 import { MeasureType } from "../../domain/enum/MeasureType.js"
 import { GeminiImageAnalyze } from "../../domain/gemini/GeminiImageAnalyze.js"
 import { Converter } from "../../domain/utils/Converter.js"
-import { GeminiMapper } from "../gateway/GeminiMapper.js"
-import { InMemoryPrismaRepository } from "../repository/InMemoryPrismaRepository.js"
 import { InvalidReadbleMonthError } from "../../domain/erros/InvalidReadbleMonthError.js"
+import { InMemoryPrismaRepository } from "../../infra/repository/InMemoryPrismaRepository.js"
 
 let inMemoryPrismaRepository: InMemoryPrismaRepository
-let geminiMapper: GeminiMapper
 let geminiImageAnalyse: GeminiImageAnalyze
 let converter: Converter
 let sut: CreateConsumptionService
 
-describe('Create Consumption Controller', () => {
+describe('Create Consumption Service', () => {
 
     beforeEach(() => {
-        geminiMapper = new GeminiMapper()
         geminiImageAnalyse = new GeminiImageAnalyze()
         converter = new Converter()
-        inMemoryPrismaRepository = new InMemoryPrismaRepository(geminiMapper)
+        inMemoryPrismaRepository = new InMemoryPrismaRepository()
         sut = new CreateConsumptionService(inMemoryPrismaRepository, geminiImageAnalyse, converter)
     })
 

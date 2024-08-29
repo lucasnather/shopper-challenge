@@ -3,7 +3,7 @@ import type { Request, Response } from 'express'
 import { GeminiPrismaRepository } from "../repository/GeminiPrismaRepository.js";
 import { GeminiMapper } from "../gateway/GeminiMapper.js";
 import { MeasureType } from "../../domain/enum/MeasureType.js";
-import { FindManyConsumptionsValueService } from "../../application/services/FindManyConsumptions.js";
+import { FindManyConsumptionsValueService } from "../../application/services/FindManyConsumptionsService.js";
 import { CustomerMeasureNotFoundError } from "../../domain/erros/CustomerMeasureNotFound.js";
 
 const findManyConsumptionValueParamSchema = z.object({

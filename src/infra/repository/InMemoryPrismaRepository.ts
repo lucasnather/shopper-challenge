@@ -9,10 +9,6 @@ export class InMemoryPrismaRepository implements GeminiFactory {
 
     private consumptions: Consumption[] = []
 
-    constructor(
-        private geminiMapper: GeminiMapper
-    ) {}
-
     async create(data: Prisma.ComsumptionsCreateInput): Promise<Consumption> {
         const consumption = new Consumption(
         data.measureId || randomUUID(),

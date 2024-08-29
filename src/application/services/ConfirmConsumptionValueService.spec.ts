@@ -1,21 +1,18 @@
 import { imageBase64 } from "../../../test/image-base64.js"
 import { MeasureType } from "../../domain/enum/MeasureType.js"
-import { GeminiMapper } from "../gateway/GeminiMapper.js"
-import { InMemoryPrismaRepository } from "../repository/InMemoryPrismaRepository.js"
-import { ConfirmConsumptionValueService } from "../../application/services/ConfirmConsumptionValueService.js"
+import { InMemoryPrismaRepository } from "../../infra/repository/InMemoryPrismaRepository.js"
+import { ConfirmConsumptionValueService } from "./ConfirmConsumptionValueService.js"
 import { MeasureAlreadyConfirmedError } from "../../domain/erros/MeasureAlreadyConfirmedError.js"
 import { MeasureNotFoundError } from "../../domain/erros/MeasureNotFoundError.js"
 import { ValueNotEqualError } from "../../domain/erros/ValueNotEqualError.js"
 
 let inMemoryPrismaRepository: InMemoryPrismaRepository
-let geminiMapper: GeminiMapper
 let sut: ConfirmConsumptionValueService
 
 describe('Confirm Consumption Service', () => {
 
     beforeEach(() => {
-        geminiMapper = new GeminiMapper()
-        inMemoryPrismaRepository = new InMemoryPrismaRepository(geminiMapper)
+        inMemoryPrismaRepository = new InMemoryPrismaRepository()
         sut = new ConfirmConsumptionValueService(inMemoryPrismaRepository)
     })
 
