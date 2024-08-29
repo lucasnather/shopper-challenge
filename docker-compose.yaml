@@ -1,8 +1,8 @@
 
 services:
   postgresql: 
-    image: 'bitnami/postgresql:latest'
-    container_name: shopper
+    image: 'bitnami/postgresql'
+    container_name: shopper-database
     ports:
       - 5432:5432
     volumes:
@@ -11,6 +11,20 @@ services:
       - POSTGRESQL_USERNAME=${POSTGRES_USERNAME}
       - POSTGRESQL_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRESQL_DATABASE=${POSTGRES_DATABASE}
+    networks:
+      - shopper
+
+  api-shopper:
+    build:
+      context: .
+    container_name: api-shopper
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - DATABASE_URL=${DATABASE_URL}
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgresql
     networks:
       - shopper
 
