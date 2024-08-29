@@ -26,16 +26,18 @@ export class GeminiPrismaRepository implements GeminiFactory {
         
     }
 
-    async  confirmValue(measureValue: number, measureId: string): Promise<Consumption> {
+    async  confirmValue(measureValue: number, measureId: string): Promise<Consumption | null> {
         const consumption = await prisma.comsumptions.update({
             where: {
-                measureId,
-                measureValue
+                measureValue,
+                measureId
             },
             data: {
                 hasConfirmed: true
             }
         })
+
+        if(!consumption) return null
 
         const consumptionToDomain = this.geminiMapper.toDomain(consumption)
 

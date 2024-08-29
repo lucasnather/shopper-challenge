@@ -54,4 +54,8 @@ export class Consumption {
     public get getHasConfirmed() {
         return this.hasConfirmed
     }
+
+    public setHasConfirmed(hasConfirmed: boolean) {
+        this.hasConfirmed = true
+    }
 }

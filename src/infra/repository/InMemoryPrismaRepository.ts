@@ -28,8 +28,16 @@ export class InMemoryPrismaRepository implements GeminiFactory {
         return consumption
     }
 
-    confirmValue(measureValue: number, measureId: string): Promise<Consumption> {
-        throw new Error("Method not implemented.");
+    async confirmValue(measureValue: number, measureId?: string): Promise<Consumption | null> {
+        let consumption = this.consumptions.find(consumption => {
+            return consumption.getMeasureValue === measureValue && measureId
+        })
+
+        if(!consumption) return null
+
+        consumption.setHasConfirmed(true)
+    
+        return consumption
     }
 
     async findByMonth(measureType: MeasureType, measureDatetime: Date): Promise<string | null> {
@@ -51,8 +59,12 @@ export class InMemoryPrismaRepository implements GeminiFactory {
         }
     }
     
-    findById(measureId: string): Promise<Consumption | null> {
-        throw new Error("Method not implemented.");
+    async findById(measureId: string): Promise<Consumption | null> {
+        const consumption = this.consumptions.find(consumption => consumption.getMeasureId === measureId)
+    
+        if(!consumption) return null
+
+        return consumption
     }
     findMany(customerCode: string, measureType?: MeasureType): Promise<ConsumptionsResponse> {
         throw new Error("Method not implemented.");
