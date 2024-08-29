@@ -1,15 +1,14 @@
-import { Comsumptions, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { ConsumptionsResponse, GeminiFactory } from "../../application/gateway/GeminiFactory.js";
 import { MeasureType } from "../../domain/enum/MeasureType.js";
 import { randomUUID } from "node:crypto";
-import { GeminiMapper } from "../gateway/GeminiMapper.js";
 import { Consumption } from "../../domain/Consumption.js";
 
 export class InMemoryPrismaRepository implements GeminiFactory {
 
     private consumptions: Consumption[] = []
 
-    async create(data: Prisma.ComsumptionsCreateInput): Promise<Consumption> {
+    async create(data: Prisma.ConsumptionsCreateInput): Promise<Consumption> {
         const consumption = new Consumption(
         data.measureId || randomUUID(),
         data.measureValue,

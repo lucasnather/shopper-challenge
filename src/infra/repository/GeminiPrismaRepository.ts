@@ -9,8 +9,8 @@ export class GeminiPrismaRepository implements GeminiFactory {
 
     constructor(private geminiMapper: GeminiMapper) {}
    
-    async create(data: Prisma.ComsumptionsCreateInput): Promise<Consumption> {
-        const consumption = await prisma.comsumptions.create({
+    async create(data: Prisma.ConsumptionsCreateInput): Promise<Consumption> {
+        const consumption = await prisma.consumptions.create({
             data: {
                 customerCode: data.customerCode,
                 measureValue: data.measureValue,
@@ -27,7 +27,7 @@ export class GeminiPrismaRepository implements GeminiFactory {
     }
 
     async  confirmValue(measureValue: number, measureId: string): Promise<Consumption | null> {
-        const consumption = await prisma.comsumptions.update({
+        const consumption = await prisma.consumptions.update({
             where: {
                 measureValue,
                 measureId
@@ -47,7 +47,7 @@ export class GeminiPrismaRepository implements GeminiFactory {
     async findByMonth(measureType: MeasureType, measureDatetime: Date): Promise<string | null> {
         const month = measureDatetime.getMonth() + 1
 
-        const consumption = await prisma.comsumptions.findFirst({
+        const consumption = await prisma.consumptions.findFirst({
             where: {
                 AND: [
                     {
@@ -80,7 +80,7 @@ export class GeminiPrismaRepository implements GeminiFactory {
     }
 
     async findById(measureId: string): Promise<Consumption | null> {
-        const consumption = await prisma.comsumptions.findUnique({
+        const consumption = await prisma.consumptions.findUnique({
             where: {
                 measureId
             }
@@ -94,7 +94,7 @@ export class GeminiPrismaRepository implements GeminiFactory {
     }
 
     async findMany(customerCode: string, measureType?: MeasureType): Promise<ConsumptionsResponse> {
-        const consumptions = await prisma.comsumptions.findMany({
+        const consumptions = await prisma.consumptions.findMany({
             where: {
                 customerCode,
                 measureType

@@ -16,7 +16,7 @@ export type ConsumptionsResponse = {
 }
 
 export interface GeminiFactory {
-    create(data: Prisma.ComsumptionsCreateInput): Promise<Consumption>
+    create(data: Prisma.ConsumptionsCreateInput): Promise<Consumption>
     confirmValue(measureValue: number, measureId?: string): Promise<Consumption | null>
     findByMonth(measureType: MeasureType, measureDatetime: Date): Promise<string | null>
     findById(measureId: string): Promise<Consumption | null>

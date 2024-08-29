@@ -18,7 +18,7 @@ enum MeasureType {
   WATER 
 }
 
-model Comsumptions {
+model Consumptions {
 
   measureId String @id @default(uuid()) @map("measure_id")
   measureValue Int @map("measure_value")

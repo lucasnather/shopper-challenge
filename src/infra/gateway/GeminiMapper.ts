@@ -4,7 +4,7 @@ import { randomUUID } from "node:crypto";
 
 export class GeminiMapper {
 
-    public toDomain(data: Prisma.ComsumptionsCreateInput) {
+    public toDomain(data: Prisma.ConsumptionsCreateInput) {
         const id = data.measureId || randomUUID()
         const date = new Date(data.measureDatetime)
 
