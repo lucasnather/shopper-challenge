@@ -66,8 +66,36 @@ export class InMemoryPrismaRepository implements GeminiFactory {
 
         return consumption
     }
-    findMany(customerCode: string, measureType?: MeasureType): Promise<ConsumptionsResponse> {
-        throw new Error("Method not implemented.");
+
+    async findMany(customerCode: string, measureType?: MeasureType): Promise<ConsumptionsResponse> {
+        let consumption
+
+        if(measureType) {
+            consumption = this.consumptions.filter(consumption => {
+                return consumption.getCustomerCode === customerCode && consumption.getMeasureType === measureType
+            })
+        } else {
+            consumption = this.consumptions.filter(consumption => {
+                return consumption.getCustomerCode === customerCode
+            })
+
+        }
+
+        const measures = consumption.map(consumption => {
+            return {
+                hasConfirmed: consumption.getHasConfirmed,
+                imageUrl: consumption.getImageUrl,
+                measureDatetime: consumption.getMeasureDatetime,
+                measureId: consumption.getMeasureId,
+                measureType: consumption.getMeasureType,
+                measureValue: consumption.getMeasureValue
+            }
+        })
+
+        return {
+            customerCode,
+            measures
+        }
     }
 
 
