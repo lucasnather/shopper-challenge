@@ -49,34 +49,13 @@ $ npm install
 - POSTGRES_PASSWORD
 - POSTGRES_DATABASE
 
-## Rodando APP
+## Rodando  - OBS: não se esqueça de alterar o .env
 
 ### Imagem da a aplicação com Docker
 
 ```bash
 
 $ docker-compose up --build -d
-
-```
-
-### Rodar com linhas de comando - obs: não se esqueça de alterar o .env
-
-```bash
-
-$ npx prisma generate
-
-$ npx prisma migrate dev
-
-$ docker-compose up -d
-
-# rodar o banco de dados prisma
-$ npx prisma migrate dev
-
-# desenvolvimento
-$ npm run dev
-
-# rodando a aplicação
-$ npm run dev:watch ou npm run dev
 
 ```
 
