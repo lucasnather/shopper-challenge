@@ -49,6 +49,8 @@ $ npm install
 - POSTGRES_PASSWORD -> password
 - POSTGRES_DATABASE -> database
 
+# Certifique se todas as variáveis estão preenchidas antes de ir para o próximo passo, pois o container só irá rodar com todos os Testes Unitários passando
+
 ## Rodando  - OBS: não se esqueça de alterar o .env
 
 ### Imagem da a aplicação com Docker
