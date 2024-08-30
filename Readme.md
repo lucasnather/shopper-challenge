@@ -43,11 +43,11 @@ $ npm install
 
 # Preencha as Variáveis de Ambiente
 
-- GEMINI_API_KEY
-- DATABASE_URL
-- POSTGRES_USERNAME
-- POSTGRES_PASSWORD
-- POSTGRES_DATABASE
+- GEMINI_API_KEY -> your api key
+- DATABASE_URL-> Exemplo "postgresql://username:password@localhost:5432/database?schema=public"
+- POSTGRES_USERNAME -> username
+- POSTGRES_PASSWORD -> password
+- POSTGRES_DATABASE -> database
 
 ## Rodando  - OBS: não se esqueça de alterar o .env
 
