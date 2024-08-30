@@ -57,6 +57,12 @@ $ npm install
 
 $ docker-compose up --build -d
 
+# No Terminal do Docker rode este comando para executar as migrations
+
+$ npx prisma migrate dev
+
+# Crie qualquer texto -> Exemplo: Run migrations
+
 ```
 
 # Api Endpoints
