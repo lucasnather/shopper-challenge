@@ -1,17 +1,17 @@
 import { imageBase64 } from "../../../test/image-base64.js"
 import { MeasureType } from "../../domain/enum/MeasureType.js"
 import { InMemoryPrismaRepository } from "../../infra/repository/InMemoryPrismaRepository.js"
-import { FindManyConsumptionsValueService } from "./FindManyConsumptionsService.js"
+import { FindManyMeasuresValueService } from "./FindManyMeasureService.js"
 import { CustomerMeasureNotFoundError } from "../../domain/erros/CustomerMeasureNotFound.js"
 
 let inMemoryPrismaRepository: InMemoryPrismaRepository
-let sut: FindManyConsumptionsValueService
+let sut: FindManyMeasuresValueService
 
-describe('Find Manany Consumption Service', () => {
+describe('Find Manany Measure Service', () => {
 
     beforeEach(() => {
         inMemoryPrismaRepository = new InMemoryPrismaRepository()
-        sut = new FindManyConsumptionsValueService(inMemoryPrismaRepository)
+        sut = new FindManyMeasuresValueService(inMemoryPrismaRepository)
     })
 
     it('Should be find many consumptions by customer code', async () => {

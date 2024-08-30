@@ -1,8 +1,8 @@
 import { Prisma } from "@prisma/client";
-import { Consumption } from "../../domain/Consumption.js";
+import { Measures } from "../../domain/Measures.js";
 import { MeasureType } from "../../domain/enum/MeasureType.js";
 
-export type Measures = {
+export type Measure = {
     measureId: string,
     measureDatetime: Date,
     measureType: string,
@@ -10,15 +10,15 @@ export type Measures = {
     imageUrl: string
 }
 
-export type ConsumptionsResponse = {
+export type MeasuresResponse = {
     customerCode: string,
-    measures: Measures[]
+    measures: Measure[]
 }
 
 export interface GeminiFactory {
-    create(data: Prisma.ConsumptionsCreateInput): Promise<Consumption>
-    confirmValue(measureValue: number, measureId?: string): Promise<Consumption | null>
+    create(data: Prisma.MeasuresCreateInput): Promise<Measures>
+    confirmValue(measureValue: number, measureId?: string): Promise<Measures | null>
     findByMonth(measureType: MeasureType, measureDatetime: Date): Promise<string | null>
-    findById(measureId: string): Promise<Consumption | null>
-    findMany(customerCode: string, measureType?: MeasureType): Promise<ConsumptionsResponse>
+    findById(measureId: string): Promise<Measures | null>
+    findMany(customerCode: string, measureType?: MeasureType): Promise<MeasuresResponse>
 }

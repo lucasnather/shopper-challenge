@@ -2,28 +2,28 @@ import { z, ZodError } from "zod";
 import type { Request, Response } from 'express'
 import { GeminiPrismaRepository } from "../repository/GeminiPrismaRepository.js";
 import { GeminiMapper } from "../gateway/GeminiMapper.js";
-import { ConfirmConsumptionValueService } from "../../application/services/ConfirmConsumptionValueService.js";
+import { ConfirmMeasureValueService } from "../../application/services/ConfirmMeasureValueService.js";
 import { MeasureNotFoundError } from "../../domain/erros/MeasureNotFoundError.js";
 import { MeasureAlreadyConfirmedError } from "../../domain/erros/MeasureAlreadyConfirmedError.js";
 import { ValueNotEqualError } from "../../domain/erros/ValueNotEqualError.js";
 
-const confirmConsumptionValueBodySchema = z.object({
+const confirmMeasureValueBodySchema = z.object({
     measure_uuid: z.string({ message: "Informe um UUID válido" }).uuid(),
     measure_value: z.coerce.number({ message: "Valor precisa ser do tipo inteiro" })
 })
 
-export class ConfirmConsumptionValueController {
+export class ConfirmMeasureValueController {
 
    async confirm(req: Request, res: Response) {
        
        const geminiMapper = new GeminiMapper()
        const geminiPrismaRepository = new GeminiPrismaRepository(geminiMapper)
-       const confirmConsumptionValueService = new ConfirmConsumptionValueService(geminiPrismaRepository)
+       const confirmMeasureValueService = new ConfirmMeasureValueService(geminiPrismaRepository)
        
        try {
-        const { measure_uuid: measureId, measure_value: measureValue  } = confirmConsumptionValueBodySchema.parse(req.body)
+        const { measure_uuid: measureId, measure_value: measureValue  } = confirmMeasureValueBodySchema.parse(req.body)
         
-        const { success } = await confirmConsumptionValueService.execute({
+        const { success } = await confirmMeasureValueService.execute({
             measureId,
             measureValue
         })

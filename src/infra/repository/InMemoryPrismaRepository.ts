@@ -1,15 +1,15 @@
 import { Prisma } from "@prisma/client";
-import { ConsumptionsResponse, GeminiFactory } from "../../application/gateway/GeminiFactory.js";
+import { MeasuresResponse, GeminiFactory } from "../../application/gateway/GeminiFactory.js";
 import { MeasureType } from "../../domain/enum/MeasureType.js";
 import { randomUUID } from "node:crypto";
-import { Consumption } from "../../domain/Consumption.js";
+import { Measures } from "../../domain/Measures.js";
 
 export class InMemoryPrismaRepository implements GeminiFactory {
 
-    private consumptions: Consumption[] = []
+    private consumptions: Measures[] = []
 
-    async create(data: Prisma.ConsumptionsCreateInput): Promise<Consumption> {
-        const consumption = new Consumption(
+    async create(data: Prisma.MeasuresCreateInput): Promise<Measures> {
+        const consumption = new Measures(
         data.measureId || randomUUID(),
         data.measureValue,
         new Date(data.measureDatetime),
@@ -23,7 +23,7 @@ export class InMemoryPrismaRepository implements GeminiFactory {
         return consumption
     }
 
-    async confirmValue(measureValue: number, measureId?: string): Promise<Consumption | null> {
+    async confirmValue(measureValue: number, measureId?: string): Promise<Measures | null> {
         let consumption = this.consumptions.find(consumption => {
             return consumption.getMeasureValue === measureValue && measureId
         })
@@ -43,18 +43,18 @@ export class InMemoryPrismaRepository implements GeminiFactory {
         })
 
         if(!consumption) {
-            return 'Consumption Not Found'
+            return 'Measures Not Found'
         } else {
             
             const consumptionMonth = consumption.getMeasureDatetime.getMonth() + 1
 
             if(month === consumptionMonth) return null
 
-            return 'Consumption Found'
+            return 'Measures Found'
         }
     }
     
-    async findById(measureId: string): Promise<Consumption | null> {
+    async findById(measureId: string): Promise<Measures | null> {
         const consumption = this.consumptions.find(consumption => consumption.getMeasureId === measureId)
     
         if(!consumption) return null
@@ -62,7 +62,7 @@ export class InMemoryPrismaRepository implements GeminiFactory {
         return consumption
     }
 
-    async findMany(customerCode: string, measureType?: MeasureType): Promise<ConsumptionsResponse> {
+    async findMany(customerCode: string, measureType?: MeasureType): Promise<MeasuresResponse> {
         let consumption
 
         if(measureType) {

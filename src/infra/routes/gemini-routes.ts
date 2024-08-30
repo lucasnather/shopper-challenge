@@ -1,17 +1,17 @@
 import { Router } from 'express'
-import { CreateConsumptionController } from '../controller/CreateConsumptionController.js'
-import { ConfirmConsumptionValueController } from '../controller/ConfirmConsumptionValueController.js'
-import { FindManyConsumptionValueController } from '../controller/FindManyConsumptionController.js'
+import { CreateMeasureController } from '../controller/CreateMeasureController.js'
+import { ConfirmMeasureValueController } from '../controller/ConfirmMeasureValueController.js'
+import { FindManyMeasureValueController } from '../controller/FindManyMeasureController.js'
 
 const router = Router()
 
-const createGeminiController = new CreateConsumptionController()
-const confirmConsumptionValueController = new ConfirmConsumptionValueController()
-const findManyConsumptionValueController = new FindManyConsumptionValueController()
+const createGeminiController = new CreateMeasureController()
+const confirmMeasuresValueController = new ConfirmMeasureValueController()
+const findManyMeasuresValueController = new FindManyMeasureValueController()
 
 router 
     .post('/upload', (req, res) => createGeminiController.upload(req, res))
-    .patch('/confirm', (req, res) => confirmConsumptionValueController.confirm(req, res))
-    .get('/:customer_code/list', (req, res) => findManyConsumptionValueController.getMany(req, res))
+    .patch('/confirm', (req, res) => confirmMeasuresValueController.confirm(req, res))
+    .get('/:customer_code/list', (req, res) => findManyMeasuresValueController.getMany(req, res))
     
 export const geminRouter = router

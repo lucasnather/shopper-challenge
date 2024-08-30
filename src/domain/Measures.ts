@@ -1,7 +1,7 @@
 import { MeasureType } from "@prisma/client"
 import { randomUUID } from "node:crypto"
 
-export class Consumption {
+export class Measures {
 
     private measureId: string
     private measureValue: number

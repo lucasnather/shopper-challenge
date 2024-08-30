@@ -1,5 +1,5 @@
 import { imageBase64 } from "../../../test/image-base64.js"
-import { CreateConsumptionService } from "./CreateConsumptionService.js"
+import { CreateMeasureService } from "./CreateMeasureService.js"
 import { MeasureType } from "../../domain/enum/MeasureType.js"
 import { GeminiImageAnalyze } from "../../domain/gemini/GeminiImageAnalyze.js"
 import { Converter } from "../../domain/utils/Converter.js"
@@ -9,15 +9,15 @@ import { InMemoryPrismaRepository } from "../../infra/repository/InMemoryPrismaR
 let inMemoryPrismaRepository: InMemoryPrismaRepository
 let geminiImageAnalyse: GeminiImageAnalyze
 let converter: Converter
-let sut: CreateConsumptionService
+let sut: CreateMeasureService
 
-describe('Create Consumption Service', () => {
+describe('Create Measure Service', () => {
 
     beforeEach(() => {
         geminiImageAnalyse = new GeminiImageAnalyze()
         converter = new Converter()
         inMemoryPrismaRepository = new InMemoryPrismaRepository()
-        sut = new CreateConsumptionService(inMemoryPrismaRepository, geminiImageAnalyse, converter)
+        sut = new CreateMeasureService(inMemoryPrismaRepository, geminiImageAnalyse, converter)
     })
 
     it('Should be register a measure', async () => {

@@ -1,19 +1,19 @@
 import { imageBase64 } from "../../../test/image-base64.js"
 import { MeasureType } from "../../domain/enum/MeasureType.js"
 import { InMemoryPrismaRepository } from "../../infra/repository/InMemoryPrismaRepository.js"
-import { ConfirmConsumptionValueService } from "./ConfirmConsumptionValueService.js"
+import { ConfirmMeasureValueService } from "./ConfirmMeasureValueService.js"
 import { MeasureAlreadyConfirmedError } from "../../domain/erros/MeasureAlreadyConfirmedError.js"
 import { MeasureNotFoundError } from "../../domain/erros/MeasureNotFoundError.js"
 import { ValueNotEqualError } from "../../domain/erros/ValueNotEqualError.js"
 
 let inMemoryPrismaRepository: InMemoryPrismaRepository
-let sut: ConfirmConsumptionValueService
+let sut: ConfirmMeasureValueService
 
-describe('Confirm Consumption Service', () => {
+describe('Confirm Measure Service', () => {
 
     beforeEach(() => {
         inMemoryPrismaRepository = new InMemoryPrismaRepository()
-        sut = new ConfirmConsumptionValueService(inMemoryPrismaRepository)
+        sut = new ConfirmMeasureValueService(inMemoryPrismaRepository)
     })
 
     it('Should be confirm a measure', async () => {

@@ -3,30 +3,30 @@ import { MeasureNotFoundError } from "../../domain/erros/MeasureNotFoundError.js
 import { ValueNotEqualError } from "../../domain/erros/ValueNotEqualError.js";
 import { GeminiFactory } from "../gateway/GeminiFactory.js";
 
-type ConfirmConsumptionValueRequest = {
+type ConfirmMeasureValueRequest = {
     measureValue: number
     measureId: string
 }
 
-type ConfirmConsumptionValueResponse = {
+type ConfirmMeasureValueResponse = {
     success: boolean
 }
 
-export class ConfirmConsumptionValueService {
+export class ConfirmMeasureValueService {
 
     constructor(
         private geminiFactory: GeminiFactory,
     ) {}
 
-    async execute(data: ConfirmConsumptionValueRequest): Promise<ConfirmConsumptionValueResponse> {
+    async execute(data: ConfirmMeasureValueRequest): Promise<ConfirmMeasureValueResponse> {
        
-        const findConsumptionById = await this.geminiFactory.findById(data.measureId)
+        const findMeasureById = await this.geminiFactory.findById(data.measureId)
 
-        if(!findConsumptionById) throw new MeasureNotFoundError()
+        if(!findMeasureById) throw new MeasureNotFoundError()
 
-        if(findConsumptionById.getHasConfirmed) throw new MeasureAlreadyConfirmedError()
+        if(findMeasureById.getHasConfirmed) throw new MeasureAlreadyConfirmedError()
 
-        const isValueEqual = findConsumptionById.getMeasureValue === data.measureValue
+        const isValueEqual = findMeasureById.getMeasureValue === data.measureValue
 
         if(!isValueEqual) throw new ValueNotEqualError()
 

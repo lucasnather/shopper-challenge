@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
-import { ConsumptionsResponse, GeminiFactory } from "../../application/gateway/GeminiFactory.js";
-import { Consumption } from "../../domain/Consumption.js";
+import { MeasuresResponse, GeminiFactory } from "../../application/gateway/GeminiFactory.js";
+import { Measures } from "../../domain/Measures.js";
 import { prisma } from "../../config/prisma.js";
 import { GeminiMapper } from "../gateway/GeminiMapper.js";
 import { MeasureType } from "../../domain/enum/MeasureType.js";
@@ -9,8 +9,8 @@ export class GeminiPrismaRepository implements GeminiFactory {
 
     constructor(private geminiMapper: GeminiMapper) {}
    
-    async create(data: Prisma.ConsumptionsCreateInput): Promise<Consumption> {
-        const consumption = await prisma.consumptions.create({
+    async create(data: Prisma.MeasuresCreateInput): Promise<Measures> {
+        const measure = await prisma.measures.create({
             data: {
                 customerCode: data.customerCode,
                 measureValue: data.measureValue,
@@ -20,14 +20,14 @@ export class GeminiPrismaRepository implements GeminiFactory {
             }
         })
 
-        const consumptionToDomain = this.geminiMapper.toDomain(consumption);
+        const measureToDomain = this.geminiMapper.toDomain(measure);
 
-        return consumptionToDomain
+        return measureToDomain
         
     }
 
-    async  confirmValue(measureValue: number, measureId: string): Promise<Consumption | null> {
-        const consumption = await prisma.consumptions.update({
+    async  confirmValue(measureValue: number, measureId: string): Promise<Measures | null> {
+        const measure = await prisma.measures.update({
             where: {
                 measureValue,
                 measureId
@@ -37,17 +37,17 @@ export class GeminiPrismaRepository implements GeminiFactory {
             }
         })
 
-        if(!consumption) return null
+        if(!measure) return null
 
-        const consumptionToDomain = this.geminiMapper.toDomain(consumption)
+        const measureToDomain = this.geminiMapper.toDomain(measure)
 
-        return consumptionToDomain
+        return measureToDomain
     }
 
     async findByMonth(measureType: MeasureType, measureDatetime: Date): Promise<string | null> {
         const month = measureDatetime.getMonth() + 1
 
-        const consumption = await prisma.consumptions.findFirst({
+        const measure = await prisma.measures.findFirst({
             where: {
                 AND: [
                     {
@@ -67,34 +67,34 @@ export class GeminiPrismaRepository implements GeminiFactory {
             }
         })
 
-        if(!consumption) {
-            return 'Consumption Not Found'
+        if(!measure) {
+            return 'Measure Not Found'
         } else {
             
-            const consumptionMonth = consumption.measureDatetime.getMonth() + 1
+            const measureMonth = measure.measureDatetime.getMonth() + 1
 
-            if(month === consumptionMonth) return null
+            if(month === measureMonth) return null
 
-            return 'Consumption Found'
+            return 'Measure Found'
         }
     }
 
-    async findById(measureId: string): Promise<Consumption | null> {
-        const consumption = await prisma.consumptions.findUnique({
+    async findById(measureId: string): Promise<Measures | null> {
+        const measure = await prisma.measures.findUnique({
             where: {
                 measureId
             }
         })
 
-        if(!consumption) return null
+        if(!measure) return null
 
-        const consumptionToDomain = this.geminiMapper.toDomain(consumption)
+        const measureToDomain = this.geminiMapper.toDomain(measure)
 
-        return consumptionToDomain
+        return measureToDomain
     }
 
-    async findMany(customerCode: string, measureType?: MeasureType): Promise<ConsumptionsResponse> {
-        const consumptions = await prisma.consumptions.findMany({
+    async findMany(customerCode: string, measureType?: MeasureType): Promise<MeasuresResponse> {
+        const findMeasures = await prisma.measures.findMany({
             where: {
                 customerCode,
                 measureType
@@ -109,14 +109,14 @@ export class GeminiPrismaRepository implements GeminiFactory {
             }
         })
 
-        const measures = consumptions.map(consumption => {
+        const measures = findMeasures.map(measure => {
             return {
-                hasConfirmed: consumption.hasConfirmed,
-                imageUrl: consumption.imageUrl,
-                measureDatetime: consumption.measureDatetime,
-                measureId: consumption.measureId,
-                measureType: consumption.measureType,
-                measureValue: consumption.measureValue
+                hasConfirmed: measure.hasConfirmed,
+                imageUrl: measure.imageUrl,
+                measureDatetime: measure.measureDatetime,
+                measureId: measure.measureId,
+                measureType: measure.measureType,
+                measureValue: measure.measureValue
             }
         })
 

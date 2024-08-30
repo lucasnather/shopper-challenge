@@ -1,5 +1,6 @@
 import express from 'express'
 import { geminRouter } from './infra/routes/gemini-routes.js'
+import { customerRouter } from './infra/routes/customer-routes.js'
 
 const app = express()
 
@@ -16,7 +17,7 @@ app.get('/', async (req, res) => {
 })
 
 app.use(geminRouter)
-
+app.use(customerRouter)
 
 app.listen(port, () => {
     console.log(`Application running at port http://localhost:${port}/`)

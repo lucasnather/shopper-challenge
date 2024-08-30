@@ -1,14 +1,14 @@
 import { Prisma } from "@prisma/client";
-import { Consumption } from "../../domain/Consumption.js";
+import { Measures } from "../../domain/Measures.js";
 import { randomUUID } from "node:crypto";
 
 export class GeminiMapper {
 
-    public toDomain(data: Prisma.ConsumptionsCreateInput) {
+    public toDomain(data: Prisma.MeasuresCreateInput) {
         const id = data.measureId || randomUUID()
         const date = new Date(data.measureDatetime)
 
-        return new Consumption(
+        return new Measures(
             id, 
             data.measureValue, 
             date, 
@@ -18,7 +18,7 @@ export class GeminiMapper {
             data.hasConfirmed || false)
     }
 
-    public toEntity(data: Consumption) {
+    public toEntity(data: Measures) {
         return {
             measureId: data.getMeasureId,
             measureValue: data.getMeasureValue,
