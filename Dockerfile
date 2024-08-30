@@ -14,6 +14,9 @@ RUN npx prisma generate
 
 RUN npm run build
 
+
+RUN npm t
+
 FROM node:20-alpine3.20
 
 WORKDIR /usr/src/app
