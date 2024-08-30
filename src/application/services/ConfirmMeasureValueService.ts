@@ -1,6 +1,5 @@
 import { MeasureAlreadyConfirmedError } from "../../domain/erros/MeasureAlreadyConfirmedError.js";
 import { MeasureNotFoundError } from "../../domain/erros/MeasureNotFoundError.js";
-import { ValueNotEqualError } from "../../domain/erros/ValueNotEqualError.js";
 import { GeminiFactory } from "../gateway/GeminiFactory.js";
 
 type ConfirmMeasureValueRequest = {
@@ -25,10 +24,6 @@ export class ConfirmMeasureValueService {
         if(!findMeasureById) throw new MeasureNotFoundError()
 
         if(findMeasureById.getHasConfirmed) throw new MeasureAlreadyConfirmedError()
-
-        const isValueEqual = findMeasureById.getMeasureValue === data.measureValue
-
-        if(!isValueEqual) throw new ValueNotEqualError()
 
         await this.geminiFactory.confirmValue(data.measureValue, data.measureId)
 

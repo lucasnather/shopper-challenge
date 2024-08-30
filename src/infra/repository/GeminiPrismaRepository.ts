@@ -29,11 +29,11 @@ export class GeminiPrismaRepository implements GeminiFactory {
     async  confirmValue(measureValue: number, measureId: string): Promise<Measures | null> {
         const measure = await prisma.measures.update({
             where: {
-                measureValue,
                 measureId
             },
             data: {
-                hasConfirmed: true
+                hasConfirmed: true,
+                measureValue
             }
         })
 
