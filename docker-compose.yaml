@@ -1,10 +1,11 @@
+version: "3.9"
 
 services:
-  postgresql: 
+  db: 
     image: 'bitnami/postgresql'
     container_name: shopper-database
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - ./db:/var/lib/postgresql
     environment:
@@ -19,12 +20,12 @@ services:
       context: .
     container_name: api-shopper
     environment:
+      - DATABASE_URL=postgres://lucasbrandao:senhaprageralvermesmo@db:5432/readings?schema=public
       - GEMINI_API_KEY=${GEMINI_API_KEY}
-      - DATABASE_URL=${DATABASE_URL}
     ports:
-      - 8080:8080
+      - "8080:8080"
     depends_on:
-      - postgresql
+      - db
     networks:
       - shopper
 
