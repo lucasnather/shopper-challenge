@@ -1,12 +1,12 @@
 # API com Gemini IA - Leitura Indivualizada de Consumo de Água e Gás
 
-# Descrição
+## Descrição
 
 <p> A Proposta da API - A pessoa enviará foto do seu medidor de Água ou Gás e a GEMINI IA irá retornar 
 o valor já consumido de seu medidor. O Objetivo desta aplicação é a facilitação do uso do usuário na hora de obter a coleta da informação.
 </p>
 
-# Tecnologias 
+## Tecnologias 
 
 <div style="display: flex; gap: 30px;">
     <img alt="NodeJs" src="./assets/node-js.png" style="width:50px;">
@@ -16,7 +16,7 @@ o valor já consumido de seu medidor. O Objetivo desta aplicação é a facilita
     <img alt="Docker" src="./assets/docker.png" style="width:50px;">
 </div>
 
-# Versões
+## Versões
 
 ```bash
 
@@ -41,7 +41,7 @@ $ npm install
 
 ```
 
-# Preencha as Variáveis de Ambiente
+## Preencha as Variáveis de Ambiente
 
 - GEMINI_API_KEY -> your api key
 - DATABASE_URL-> Exemplo "postgresql://username:password@localhost:5432/database?schema=public"
@@ -65,7 +65,21 @@ $ npx prisma migrate dev
 
 ```
 
-# Api Endpoints
+## Rodar testes Unitários
+
+
+```bash
+
+$ npm t
+
+#ou
+
+$ npm run test:watch
+
+```
+
+
+## Api Endpoints
 
 1. Criar Consulta de Leitura
 
@@ -154,11 +168,11 @@ $ npx prisma migrate dev
 ```
 </ul>
 
-# Aprendizado
+## Aprendizado
 
 <p>Nesta aplicação aprendi como Otimizar mais a imagem da aplicação Docker, a criar um limite para a requição vinda do método POST, a como usar a API da GEMINI IA para consultar as imagens e criar prompts para ela entender que só poderá enviar valores inteiros, reforçar aprendizado em Arquitetura limpa e melhorar em testes unitários</p> 
 
-# Fluxo da app
+## Fluxo da app
 
 <p>Como eu desenvolvi a aplicação - Arquitetura Limpa</p>
 
