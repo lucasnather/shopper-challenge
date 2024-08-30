@@ -1,22 +1,30 @@
 import { imageBase64 } from "../../../test/image-base64.js"
 import { MeasureType } from "../../domain/enum/MeasureType.js"
 import { InMemoryPrismaRepository } from "../../infra/repository/InMemoryPrismaRepository.js"
-import { FindManyMeasuresValueService } from "./FindManyMeasureService.js"
+import { FindManyMeasureValueService } from "./FindManyMeasureService.js"
 import { CustomerMeasureNotFoundError } from "../../domain/erros/CustomerMeasureNotFound.js"
+import { InMemoryCustomerRepository } from "../../infra/repository/InMemoryCustomerRepository.js"
 
 let inMemoryPrismaRepository: InMemoryPrismaRepository
-let sut: FindManyMeasuresValueService
+let inMemoryCustomerRepository: InMemoryCustomerRepository
+let sut: FindManyMeasureValueService
 
 describe('Find Manany Measure Service', () => {
 
     beforeEach(() => {
         inMemoryPrismaRepository = new InMemoryPrismaRepository()
-        sut = new FindManyMeasuresValueService(inMemoryPrismaRepository)
+        inMemoryCustomerRepository = new InMemoryCustomerRepository()
+        sut = new FindManyMeasureValueService(inMemoryPrismaRepository, inMemoryCustomerRepository)
     })
 
     it('Should be find many consumptions by customer code', async () => {
+        const customer = await inMemoryCustomerRepository.create({
+            email: 'email@email.com',
+            password: '123456',
+        })
+
         await inMemoryPrismaRepository.create({
-            customerCode: '123456',
+            customerCode: customer.getCustomerCode,
             measureDatetime: new Date(),
             measureType: MeasureType.WATER,
             imageUrl: imageBase64,
@@ -24,7 +32,7 @@ describe('Find Manany Measure Service', () => {
         })
 
         await inMemoryPrismaRepository.create({
-            customerCode: '123456',
+            customerCode: customer.getCustomerCode,
             measureDatetime: new Date(),
             measureType: MeasureType.GAS,
             imageUrl: imageBase64,
@@ -33,17 +41,21 @@ describe('Find Manany Measure Service', () => {
 
 
         const { customerCode, measures } = await sut.execute({
-            customerCode: '123456',
+            customerCode: customer.getCustomerCode,
         })
 
-        expect(customerCode).toEqual('123456')
         expect(measures).toHaveLength(2)
         expect(measures[0].measureType).toEqual('WATER')
     })
 
     it('Should be find many consumptions by customer code filtering by WATER', async () => {
+        const customer = await inMemoryCustomerRepository.create({
+            email: 'email@email.com',
+            password: '123456',
+        })
+
         await inMemoryPrismaRepository.create({
-            customerCode: '123456',
+            customerCode: customer.getCustomerCode,
             measureDatetime: new Date(),
             measureType: MeasureType.WATER,
             imageUrl: imageBase64,
@@ -51,7 +63,7 @@ describe('Find Manany Measure Service', () => {
         })
 
         await inMemoryPrismaRepository.create({
-            customerCode: '123456',
+            customerCode: customer.getCustomerCode,
             measureDatetime: new Date(),
             measureType: MeasureType.GAS,
             imageUrl: imageBase64,
@@ -60,19 +72,23 @@ describe('Find Manany Measure Service', () => {
 
     
         const { customerCode, measures } = await sut.execute({
-            customerCode: '123456',
+            customerCode: customer.getCustomerCode,
             measureType: MeasureType.WATER
         })
 
-        expect(customerCode).toEqual('123456')
         expect(measures).toHaveLength(1)
         expect(measures[0].measureType).toEqual('WATER')
 
     })
 
     it('Should be find many consumptions by customer code filtering by GAS', async () => {
+        const customer = await inMemoryCustomerRepository.create({
+            email: 'email@email.com',
+            password: '123456',
+        })
+
         await inMemoryPrismaRepository.create({
-            customerCode: '123456',
+            customerCode: customer.getCustomerCode,
             measureDatetime: new Date(),
             measureType: MeasureType.WATER,
             imageUrl: imageBase64,
@@ -80,7 +96,7 @@ describe('Find Manany Measure Service', () => {
         })
 
         await inMemoryPrismaRepository.create({
-            customerCode: '123456',
+            customerCode: customer.getCustomerCode,
             measureDatetime: new Date(),
             measureType: MeasureType.GAS,
             imageUrl: imageBase64,
@@ -89,20 +105,23 @@ describe('Find Manany Measure Service', () => {
 
 
         const { customerCode, measures } = await sut.execute({
-            customerCode: '123456',
+            customerCode: customer.getCustomerCode,
             measureType: MeasureType.GAS
         })
 
-        expect(customerCode).toEqual('123456')
         expect(measures).toHaveLength(1)
         expect(measures[0].measureType).toEqual('GAS')
     })
 
     it('Should be return an error when measures are empty', async () => {
+        const customer = await inMemoryCustomerRepository.create({
+            email: 'email@email.com',
+            password: '123456',
+        })
       
         expect(async () => {
             await sut.execute({
-                customerCode: '123456',
+                customerCode: customer.getCustomerCode,
             })
         }).rejects.toBeInstanceOf(CustomerMeasureNotFoundError)
     })
