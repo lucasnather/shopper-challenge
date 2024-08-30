@@ -79,9 +79,70 @@ $ npm run test:watch
 ```
 
 
-## Api Endpoints
+## Api 
 
-1. Criar Consulta de Leitura
+1. Criar Um Código para o Usuário
+
+<ul>
+    <li>Metódo: POST</li>
+    <li>Content-type: application/json</li>
+    <li>URL: http://localhost:8080/register/code</li>
+    <li>Response status: 201 CREATED</li>
+    <li>Request Body:</li>
+
+```bash
+
+    {
+        "email": "email@gmail.com",
+        "password": "123456"
+    }
+
+```
+
+<li>Response Payload<li>
+
+
+```bash
+    {
+       "customer_code": "uuid"
+    }
+```
+
+</ul>
+
+2. Pegar Um Código para o Usuário
+
+<ul>
+    <li>Metódo: POST</li>
+    <li>Content-type: application/json</li>
+    <li>URL: http://localhost:8080/code</li>
+    <li>Response status: 201 CREATED</li>
+    <li>Essa rota é valida as credenciasi do usuário para lhe retornar seu código</li>
+    <li>Request Body:</li>
+
+```bash
+
+    {
+        "email": "email@gmail.com",
+        "password": "123456"
+    }
+
+```
+
+<li>Response Payload<li>
+
+
+```bash
+    {
+       "customer_code": "uuid"
+    }
+```
+
+</ul>
+
+
+
+3. Criar Consulta de Leitura
 
 <ul>
     <li>Metódo: POST</li>
@@ -116,7 +177,7 @@ $ npm run test:watch
 </ul>
 
 
-2. Confirmar Valor retornado da API.
+4. Confirmar Valor retornado da API.
 
 <ul>
     <li>Metódo: PATCH</li>
@@ -141,7 +202,7 @@ $ npm run test:watch
     }
 
 ```
-3. Buscar todas as consultas de um usuário através do Customer Code
+5. Buscar todas as consultas de um usuário através do Customer Code
 <ul>
     <li>Metódo: GET</li>
     <li>URL: http://localhost:8080/{uuid}/list?measure_type</li>
