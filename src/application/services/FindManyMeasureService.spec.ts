@@ -9,7 +9,7 @@ let inMemoryPrismaRepository: InMemoryPrismaRepository
 let inMemoryCustomerRepository: InMemoryCustomerRepository
 let sut: FindManyMeasureValueService
 
-describe('Find Manany Measure Service', () => {
+describe('Find Many Measure Service', () => {
 
     beforeEach(() => {
         inMemoryPrismaRepository = new InMemoryPrismaRepository()
