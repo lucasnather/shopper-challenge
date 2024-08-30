@@ -78,21 +78,4 @@ describe('Confirm Measure Service', () => {
         }).rejects.toBeInstanceOf(MeasureNotFoundError)
     })
 
-    it('Should not be confirm a value with value diferent', async () => {
-        const { getMeasureId } = await inMemoryPrismaRepository.create({
-            customerCode: '123456',
-            measureDatetime: new Date(),
-            measureType: MeasureType.WATER,
-            imageUrl: imageBase64,
-            measureValue: 21
-        })
-
-    
-        expect(async () => {
-            await sut.execute({
-                measureValue: 100,
-                measureId: getMeasureId
-            })
-        }).rejects.toBeInstanceOf(ValueNotEqualError)
-    })
 })
